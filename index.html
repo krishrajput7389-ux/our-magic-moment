@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For my Sunflower ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@500;700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #ffd700;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 215, 0, 0.4);
+            --text-light: #f8f9fa;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+            background: radial-gradient(circle at bottom, #2b1055, #0f0c29, #302b63, #24243e);
+            background-size: cover;
+            background-attachment: fixed;
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- Ambient Pixie Dust & Stickers --- */
+        .fireflies {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .firefly {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px var(--gold);
+            animation: float 6s infinite ease-in-out alternate;
+            opacity: 0.7;
+        }
+        .f1 { left: 10%; top: 80%; animation-duration: 5s; }
+        .f2 { left: 30%; top: 60%; animation-duration: 7s; }
+        .f3 { left: 50%; top: 90%; animation-duration: 6s; }
+        .f4 { left: 70%; top: 50%; animation-duration: 8s; }
+        .f5 { left: 85%; top: 70%; animation-duration: 5.5s; }
+        .f6 { left: 20%; top: 30%; animation-duration: 9s; }
+        .f7 { left: 80%; top: 20%; animation-duration: 6.5s; }
+
+        /* Disney Stickers */
+        .sticker {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.6;
+            animation: float 4s infinite ease-in-out alternate;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+            z-index: 1;
+        }
+        .st1 { top: 15%; left: 10%; animation-delay: 0s; } /* Fairy */
+        .st2 { top: 40%; right: 8%; animation-delay: 1s; font-size: 4rem; } /* Castle */
+        .st3 { top: 75%; left: 8%; animation-delay: 2s; } /* Mickey */
+        .st4 { top: 85%; right: 12%; animation-delay: 0.5s; } /* Magic Wand */
+        .st5 { top: 5%; right: 20%; animation-delay: 1.5s; font-size: 2.5rem; } /* Sparkles */
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.4; }
+            50% { transform: translateY(-20px) scale(1.1) rotate(5deg); opacity: 0.8; }
+            100% { transform: translateY(-40px) scale(1) rotate(-5deg); opacity: 0.4; }
+        }
+
+        /* --- Glass Cards --- */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            z-index: 10;
+            position: relative;
+        }
+
+        /* --- Password Screen --- */
+        #login-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 50;
+        }
+        .lock-card { padding: 40px; text-align: center; max-width: 400px; width: 80%; }
+        .lock-card h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem; color: var(--gold);
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .lock-card input {
+            padding: 12px; margin: 25px 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--gold);
+            border-radius: 50px; color: white;
+            outline: none; font-size: 18px;
+            text-align: center; letter-spacing: 2px;
+            width: 80%; transition: 0.3s;
+        }
+        .lock-card input::placeholder { color: rgba(255,255,255,0.5); letter-spacing: 4px; }
+        .lock-card input:focus { box-shadow: 0 0 15px var(--gold); }
+        
+        .btn {
+            background: linear-gradient(45deg, #d4af37, #ffdf00);
+            color: #2b1055; border: none;
+            padding: 12px 30px; border-radius: 50px;
+            cursor: pointer; font-size: 18px;
+            font-family: 'Cinzel', serif; font-weight: 700;
+            transition: 0.4s;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
+        }
+
+        /* --- Main Content --- */
+        #main-content {
+            display: none;
+            width: 100%; max-width: 900px;
+            padding: 40px 20px; text-align: center;
+            animation: etherealReveal 2s ease-in-out;
+            z-index: 10;
+            box-sizing: border-box;
+        }
+        @keyframes etherealReveal { 
+            0% { opacity: 0; transform: scale(0.95) translateY(20px); filter: blur(10px); } 
+            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); } 
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold); font-size: 4rem;
+            margin-bottom: 5px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+        .subtitle { font-family: 'Cinzel', serif; letter-spacing: 3px; margin-top: 0; opacity: 0.9; }
+        .section-title {
+            font-family: 'Cinzel', serif;
+            color: var(--gold); font-size: 2rem;
+            margin-top: 60px; margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* --- The Scroll (Letter) --- */
+        .letter-container {
+            padding: 40px; margin: 40px 0;
+            text-align: left; line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        .letter-container h3 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem; color: var(--gold); margin-top: 0;
+        }
+
+        /* --- Magical Playlist --- */
+        .playlist-container {
+            display: flex; flex-direction: column; gap: 20px;
+            margin: 0 auto 50px auto; max-width: 450px;
+            width: 100%;
+        }
+        .music-player {
+            padding: 15px 20px; display: flex; align-items: center;
+            justify-content: space-between; border-radius: 50px; transition: 0.3s ease;
+        }
+        .music-player:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3); }
+        .music-info { text-align: left; flex: 1; padding-right: 10px; }
+        .music-info h3 { margin: 0; font-family: 'Cinzel', serif; color: var(--gold); font-size: 1rem;}
+        .music-info p { margin: 0; font-size: 0.8rem; opacity: 0.8; }
+        .play-btn { padding: 8px 15px; font-size: 14px; min-width: 85px; }
+
+        /* --- Enchanted Gallery --- */
+        .gallery {
+            display: flex; flex-wrap: wrap; gap: 30px;
+            justify-content: center; padding-bottom: 50px;
+        }
+        .magic-frame {
+            padding: 15px; border-radius: 10px; width: 220px;
+            transition: 0.5s ease; position: relative; overflow: hidden;
+            box-sizing: border-box;
+        }
+        .magic-frame::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, transparent, transparent, var(--gold));
+            animation: rotateGlow 4s linear infinite; z-index: -1; opacity: 0; transition: 0.5s;
+        }
+        .magic-frame:hover::before { opacity: 1; }
+        @keyframes rotateGlow { 100% { transform: rotate(360deg); } }
+        .magic-frame:hover { transform: translateY(-10px) scale(1.05); box-shadow: 0 15px 35px rgba(255, 215, 0, 0.4); }
+        .magic-frame img { width: 100%; height: 220px; object-fit: cover; border-radius: 5px; border: 1px solid rgba(255,255,255,0.2); }
+        .shift-right { object-position: 75% center !important; }
+        .magic-frame p { margin: 15px 0 0 0; font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: white; }
+
+        /* --- MASSIVE Frosted Envelope --- */
+        .envelope-container {
+            margin: 50px auto;
+            text-align: center;
+            padding-bottom: 120px;
+            position: relative;
+            width: 100%;
+        }
+        .envelope {
+            width: 350px; 
+            height: 220px; 
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+            margin: 0 auto;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.5s;
+            box-shadow: 0 0 50px rgba(173, 216, 230, 0.5), inset 0 0 30px rgba(255, 255, 255, 0.3);
+            z-index: 20;
+            position: relative;
+            max-width: 90%; /* For mobile */
+        }
+        .envelope:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 60px rgba(173, 216, 230, 0.8), inset 0 0 40px rgba(255, 255, 255, 0.5);
+            border-color: var(--gold);
+        }
+        .envelope-icon { font-size: 5rem; margin-bottom: 10px; filter: drop-shadow(0 0 10px white); }
+        .envelope-text { font-family: 'Cinzel', serif; color: white; font-size: 1.5rem; text-shadow: 0 0 10px var(--gold); }
+
+        /* --- Shuffled Video Cards Stack --- */
+        .video-cards {
+            display: none; 
+            position: relative;
+            width: 350px;
+            height: 250px;
+            margin: 20px auto;
+            animation: etherealReveal 1s ease-in-out;
+            max-width: 100%;
+        }
+        .video-card {
+            position: absolute;
+            top: 50%; left: 50%;
+            background: linear-gradient(135deg, rgba(255,215,0,0.3), rgba(255,215,0,0.05));
+            border: 2px solid var(--gold);
+            padding: 30px 20px;
+            border-radius: 15px;
+            width: 160px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-sizing: border-box;
+        }
+        .video-card h4 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem; color: white; margin: 0;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .card-1 { transform: translate(-50%, -50%) rotate(-15deg) translateX(-40px); z-index: 1; }
+        .card-2 { transform: translate(-50%, -50%) rotate(5deg) translateY(-20px); z-index: 2; }
+        .card-3 { transform: translate(-50%, -50%) rotate(25deg) translateX(45px) translateY(10px); z-index: 3; }
+
+        .video-cards:hover .card-1 { transform: translate(-50%, -50%) rotate(-25deg) translateX(-90px) translateY(-10px); background: rgba(255,215,0,0.4); z-index: 10; }
+        .video-cards:hover .card-2 { transform: translate(-50%, -50%) rotate(0deg) translateY(-50px); background: rgba(255,215,0,0.4); z-index: 10; }
+        .video-cards:hover .card-3 { transform: translate(-50%, -50%) rotate(25deg) translateX(90px) translateY(-10px); background: rgba(255,215,0,0.4); z-index: 10; }
+
+        /* Native Video Player Popup (Modal) */
+        .modal {
+            display: none; position: fixed; z-index: 100;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+        }
+        .modal-content {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 90%; max-width: 700px; background: #0f0c29;
+            border: 2px solid var(--gold); border-radius: 15px; padding: 15px;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+            box-sizing: border-box;
+        }
+        .close-btn {
+            color: var(--gold); float: right; font-size: 35px; font-weight: bold;
+            cursor: pointer; margin-bottom: 10px; transition: 0.3s;
+        }
+        .close-btn:hover { color: white; transform: scale(1.1); }
+        
+        video {
+            width: 100%; border-radius: 10px; outline: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        /* --- 📱 MOBILE RESPONSIVENESS FIXES --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .subtitle { font-size: 0.8rem; }
+            .section-title { font-size: 1.8rem; }
+            
+            .letter-container { padding: 25px; }
+            .letter-container h3 { font-size: 2rem; }
+            .letter-container p { font-size: 1rem; }
+            
+            .magic-frame { width: 100%; max-width: 300px; }
+            
+            .envelope { height: 180px; }
+            
+            /* Tweak card fanning on small screens so they don't go off-screen */
+            .video-card { padding: 20px 10px; width: 130px; }
+            .video-card h4 { font-size: 1.5rem; }
+            .card-1 { transform: translate(-50%, -50%) rotate(-10deg) translateX(-20px); }
+            .card-3 { transform: translate(-50%, -50%) rotate(15deg) translateX(30px) translateY(10px); }
+            
+            /* Adjust hover state for mobile (active on tap) */
+            .video-cards:hover .card-1 { transform: translate(-50%, -50%) rotate(-20deg) translateX(-60px) translateY(-10px); }
+            .video-cards:hover .card-3 { transform: translate(-50%, -50%) rotate(20deg) translateX(60px) translateY(-10px); }
+            
+            .sticker { font-size: 2rem; }
+            .st2 { font-size: 2.5rem; right: 2%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Pixie Dust & Disney Magic Stickers -->
+    <div class="fireflies">
+        <div class="firefly f1"></div><div class="firefly f2"></div>
+        <div class="firefly f3"></div><div class="firefly f4"></div>
+        <div class="firefly f5"></div><div class="firefly f6"></div>
+        <div class="firefly f7"></div>
+        
+        <div class="sticker st1">🧚‍♀️</div>
+        <div class="sticker st2">🏰</div>
+        <div class="sticker st3">🐭</div>
+        <div class="sticker st4">🪄</div>
+        <div class="sticker st5">✨</div>
+    </div>
+
+    <!-- 1. The Lock Screen -->
+    <div id="login-screen">
+        <div class="glass-card lock-card">
+            <h2>The Secret Gate</h2>
+            <p style="font-family: 'Cinzel', serif;">Enter the minute the magic began </p>
+            <!-- FIX: Changed placeholder to H H M M so it doesn't reveal the password -->
+            <input type="password" id="passwordInput" placeholder="H H  M M">
+            <br>
+            <button class="btn" onclick="checkPassword()">Unlock ✨</button>
+            <p id="error-msg" style="color: #ff6b81; display: none; font-size: 0.9rem; margin-top: 15px; font-weight: bold;">The magic resists. Try again!</p>
+        </div>
+    </div>
+
+    <!-- 2. The Magical Realm -->
+    <div id="main-content">
+        <h1>Happy Anniversary, Jaan</h1>
+        <p class="subtitle">Once upon a time at 20:55...</p>
+
+        <!-- The Enchanted Scroll (Letter) -->
+        <div class="glass-card letter-container">
+            <h3>To my beautiful Baccha,</h3>
+            <p>
+                Hola Jaan, its been a year. I can't even believe how fast the time flew. Its' still feeling like that I've just met you today at 20:55 and everything going cuter and cuter. Someone has said it so correct that I can relate it now, Aap ho to meri raat ko subah, aap ho to mere andhere ko roshni, aap ho to meri karwahat ko mithaas, aap ho to mere pyaas ko paani, aap ho to mere rooh ko chain, aap ho to meri dil ko dhadhkan, aap ho to sab. Aap na to kuch nhi !!! Sacchi btau, maggi promise ??? Saccha wala Pyaar ho gya h aapke naal... Ab Sarmaaiye nhi...mujhe yaha se dikh rha aapke pyaare pyaare hotho ke piche ki muskaan.... chutki si naak pe khushi... pyaare pyaari aankho me chamak and chaand se v jada sundar chehre pe ek pyaara sa blush.... Mujhe abhi v believe nhi ho rha ki kaise ek saal ho v gya and I'm still crushing on You.... Har roj picchle din se jada pyaar ho jaa rha aapse, itna ki bataa v nhi skta.... Itna ki aapse duur hone ke khayal tk se darr lgta... Itna ki Aapko udaas dekh kar khudse hi Shikayatein hone lgti ..... I want to live my whole life with you, travel across the globe, spread happiness, build a small cozy home, start a happy little family and live with our loved ones. Maybe sometimes you take them jokingly but I really mean all of them. I just can't live without my Jaan. Mujhe abhi v yaad h wo aapka pehla message.. Mere Hola !! bolte hi aapka text - "Dekhiye bhaiya answer nhi h aapka 12th h mera 10th apni apni naiyya bachaiye". And I always think about it ki ham kahaa se kahaa tk aa chuje... abhi to or bohot aage saath jaana h .... Ek dusre ki motivation ban kr, ek dusre ka biggest supporter ban kr, ek dusre ko pyaar se v jada pyaar kr ke, Ek dusre ke liye, HAMARE liye. H na jaan ??? I'll love you forever and ever my jaan .... With time Pyaar badh skta but kabhi kam nhi hog jaan..... Hamesa aise hi badmosh, cute, pyaare, chul-bule rehna !!! I love your childish side, never let anyone to fade your that side, agar koi bole adjust krne ya wo side change krne to sidhe boliyega "Mere Bhondu Billu ne manaa kiya h", or usko uraa dena...!!! Aise hi hamesa saath rehna, mujhe kootna, pyaar krna and hamesa mere paas rehna... I love you soooooooooooooooo much my Jaan !!! My baccha !!! 🤭❤️
+            </p>
+            <p style="text-align: right; margin-top: 30px; font-family: 'Cinzel', serif; color: var(--gold);">
+                Endlessly yours,<br>
+                <span style="font-family: 'Great Vibes', cursive; font-size: 2.5rem; text-transform: capitalize;">Your Bhondu Billu</span>
+            </p>
+        </div>
+
+        <!-- Magical Playlist (5 Songs) -->
+        <h2 class="section-title">Our Magical Playlist</h2>
+        <div class="playlist-container">
+            <div class="glass-card music-player">
+                <div class="music-info"><h3>Listen it when you feel alone</h3><p>Even distance can't seperate us ✨</p></div>
+                <button class="btn play-btn" id="btn-1" onclick="togglePlay(1)">▶ Play</button>
+                <audio id="audio-1" loop><source src="song1.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="glass-card music-player">
+                <div class="music-info"><h3>Listen it when you doubt yourself</h3><p>Just feel how cute my girl is 💫</p></div>
+                <button class="btn play-btn" id="btn-2" onclick="togglePlay(2)">▶ Play</button>
+                <audio id="audio-2" loop><source src="song2.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="glass-card music-player">
+                <div class="music-info"><h3>Listen it to dive again in our love</h3><p>How my life blooms when you are around 🌙</p></div>
+                <button class="btn play-btn" id="btn-3" onclick="togglePlay(3)">▶ Play</button>
+                <audio id="audio-3" loop><source src="song3.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="glass-card music-player">
+                <div class="music-info"><h3>If you ever wonder how I feel...</h3><p>Its me whenever I see you🌹</p></div>
+                <button class="btn play-btn" id="btn-4" onclick="togglePlay(4)">▶ Play</button>
+                <audio id="audio-4" loop><source src="song4.mp3" type="audio/mpeg"></audio>
+            </div>
+            <div class="glass-card music-player">
+                <div class="music-info"><h3>Listen it when you want to know...</h3><p>every single time my heart falls for you 👑</p></div>
+                <button class="btn play-btn" id="btn-5" onclick="togglePlay(5)">▶ Play</button>
+                <audio id="audio-5" loop><source src="song5.mp3" type="audio/mpeg"></audio>
+            </div>
+        </div>
+
+        <!-- Magical Photo Frames -->
+        <h2 class="section-title">A Tale of Us</h2>
+        <div class="gallery">
+            <div class="glass-card magic-frame">
+                <img src="photo1.jpg" alt="Memory 1">
+                <p>The Spark ✨</p>
+            </div>
+            <div class="glass-card magic-frame">
+                <img src="photo2.jpg" alt="Memory 2">
+                <p>The Journey 💫</p>
+            </div>
+            <div class="glass-card magic-frame">
+                <img src="photo3.jpg" alt="Memory 3" class="shift-right">
+                <p>Happily Ever After 👑</p>
+            </div>
+        </div>
+
+        <!-- Magical Frosted Envelope Section -->
+        <h2 class="section-title">A Special Surprise</h2>
+        
+        <div class="envelope-container">
+            <div class="envelope" id="envelope-btn" onclick="openEnvelope()">
+                <div class="envelope-icon">💌</div>
+                <div class="envelope-text">Tap to Open Magic</div>
+            </div>
+
+            <!-- The Shuffled Cards -->
+            <div class="video-cards" id="video-cards-section">
+                <div class="video-card card-1" onclick="openVideo('video1.mp4')">
+                    <h4>Card 1 ✨</h4>
+                </div>
+                <div class="video-card card-2" onclick="openVideo('video2.mp4')">
+                    <h4>Card 2 💫</h4>
+                </div>
+                <div class="video-card card-3" onclick="openVideo('video3.mp4')">
+                    <h4>Card 3 👑</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Native Video Player Popup -->
+        <div id="video-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeVideo()">&times;</span>
+                <video id="local-player" controls>
+                    <source id="video-source" src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logic Controller -->
+    <script>
+        function checkPassword() {
+            const pwd = document.getElementById('passwordInput').value;
+            if (pwd === '2055') {
+                const loginScreen = document.getElementById('login-screen');
+                loginScreen.style.transition = 'opacity 1s ease';
+                loginScreen.style.opacity = '0';
+                
+                setTimeout(() => {
+                    loginScreen.style.display = 'none';
+                    document.getElementById('main-content').style.display = 'block';
+                }, 1000);
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
+
+        const totalSongs = 5;
+        let currentPlayingId = null;
+
+        function togglePlay(songId) {
+            const audio = document.getElementById(`audio-${songId}`);
+            const btn = document.getElementById(`btn-${songId}`);
+
+            if (currentPlayingId === songId) {
+                audio.pause();
+                btn.innerText = '▶ Play';
+                currentPlayingId = null;
+            } else {
+                for(let i = 1; i <= totalSongs; i++) {
+                    const a = document.getElementById(`audio-${i}`);
+                    const b = document.getElementById(`btn-${i}`);
+                    a.pause();
+                    b.innerText = '▶ Play';
+                }
+                audio.play();
+                btn.innerText = '⏸ Pause';
+                currentPlayingId = songId;
+            }
+        }
+
+        function openEnvelope() {
+            document.getElementById('envelope-btn').style.display = 'none';
+            document.getElementById('video-cards-section').style.display = 'block';
+        }
+
+        function openVideo(videoFilename) {
+            if(currentPlayingId !== null) {
+                togglePlay(currentPlayingId);
+            }
+
+            const videoPlayer = document.getElementById('local-player');
+            const videoSource = document.getElementById('video-source');
+            
+            videoSource.src = videoFilename;
+            videoPlayer.load();
+            
+            document.getElementById('video-modal').style.display = 'block';
+            videoPlayer.play();
+        }
+
+        function closeVideo() {
+            const videoPlayer = document.getElementById('local-player');
+            videoPlayer.pause();
+            videoPlayer.currentTime = 0; 
+            
+            document.getElementById('video-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
